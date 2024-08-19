@@ -1,9 +1,8 @@
 import { useState } from "react";
 
-const LoginForm = ({ onLogin }) => {
+const LoginForm = ({ onLogin, setErrorMsg }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState(null);
 
     const handleLogin = async (event) => {
         event.preventDefault();
@@ -12,10 +11,10 @@ const LoginForm = ({ onLogin }) => {
             setUsername("");
             setPassword("");
         } catch (exception) {
-            setErrorMessage("Wrong credentials");
+            setErrorMsg(`wrong username or password`);
             setTimeout(() => {
-                setErrorMessage(null);
-            }, 5000);
+                setErrorMsg(null);
+            }, 2000);
         }
     };
 
@@ -30,7 +29,6 @@ const LoginForm = ({ onLogin }) => {
                 <input type="password" value={password} name="Password" onChange={({ target }) => setPassword(target.value)} />
             </div>
             <button type="submit">login</button>
-            {errorMessage && <p>{errorMessage}</p>}
         </form>
     );
 };

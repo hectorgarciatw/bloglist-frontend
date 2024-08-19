@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import blogService from "../services/blogs";
 
-const CreateForm = ({ user, onBlogCreate }) => {
+const CreateForm = ({ user, setSuccessMsg, setErrorMsg, onBlogCreate }) => {
     const [title, setTitle] = useState("");
     const [author, setAuthor] = useState("");
     const [url, setUrl] = useState("");
@@ -22,6 +22,10 @@ const CreateForm = ({ user, onBlogCreate }) => {
             setUrl("");
             setLikes("");
             onBlogCreate();
+            setSuccessMsg(`a new blog ${title} by ${author} added`);
+            setTimeout(() => {
+                setSuccessMsg(null);
+            }, 2000);
         } catch (error) {
             console.error("Error creating blog:", error.response ? error.response.data : error.message);
             setErrorMessage(error.response ? error.response.data.error : "An error occurred");

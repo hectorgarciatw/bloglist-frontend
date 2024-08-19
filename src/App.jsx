@@ -6,12 +6,16 @@ import loginService from "./services/login";
 //Components
 import LoginForm from "./components/LoginForm";
 import CreateForm from "./components/CreateForm";
+import Notification from "./components/Notification";
 
 const App = () => {
     // List of blogs of the user
     const [blogs, setBlogs] = useState([]);
     // The user state for the login
     const [user, setUser] = useState(null);
+    // States for notification handling
+    const [successMsg, setSuccessMsg] = useState(null);
+    const [errorMsg, setErrorMsg] = useState(null);
 
     useEffect(() => {
         blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -31,8 +35,7 @@ const App = () => {
             setUser(user);
             window.localStorage.setItem("loggedUser", JSON.stringify(user));
         } catch (exception) {
-            // Manejo de error aquí si es necesario
-            console.error("Wrong credentials");
+            throw new Error("Wrong credentials");
         }
     };
 
@@ -49,7 +52,9 @@ const App = () => {
     return (
         <div>
             <h2>blog list frontend</h2>
-            {!user && <LoginForm onLogin={handleLogin} />}
+            {successMsg && <Notification msg={successMsg} type="success" />}
+            {errorMsg && <Notification msg={errorMsg} type="error" />}
+            {!user && <LoginForm onLogin={handleLogin} setErrorMsg={setErrorMsg} />}
 
             {user ? (
                 <div>
@@ -57,7 +62,7 @@ const App = () => {
                         <p style={{ fontWeight: "bold" }}>{user.name} logged in</p>
                         <button onClick={logout}>logout</button>
                     </div>
-                    <CreateForm user={user} onBlogCreate={refreshBlogs} />
+                    <CreateForm user={user} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg} onBlogCreate={refreshBlogs} />
                     {blogs.map((blog) => (
                         <Blog key={blog.id} blog={blog} />
                     ))}
