@@ -1,3 +1,5 @@
+import axios from "axios";
+
 import { useState, useEffect } from "react";
 import Blog from "./components/Blog";
 import blogService from "./services/blogs";
@@ -10,6 +12,7 @@ import Notification from "./components/Notification";
 import Togglable from "./components/Togglable";
 
 const App = () => {
+    const baseUrl = "http://localhost:3003/api/blogs";
     // List of blogs of the user
     const [blogs, setBlogs] = useState([]);
     // The user state for the login
@@ -35,6 +38,28 @@ const App = () => {
             setUser(user);
         }
     }, []);
+
+    // Updating the likes of a blog entry
+    const updateBlogOnServer = (id, updatedBlog) => {
+        return axios
+            .put(`${baseUrl}/${id}/likes`, { likes: updatedBlog.likes })
+            .then((res) => res.data)
+            .catch((error) => {
+                console.error("Error updating blog:", error);
+                throw error;
+            });
+    };
+
+    // Removing a blog entry
+    const deleteBlogOnServer = (id) => {
+        return axios
+            .delete(`${baseUrl}/${id}`)
+            .then((res) => res.data)
+            .catch((error) => {
+                console.error("");
+                throw error;
+            });
+    };
 
     const handleLogin = async (username, password) => {
         try {
@@ -74,7 +99,7 @@ const App = () => {
                     </Togglable>
                     <br />
                     {blogs.map((blog) => (
-                        <Blog key={blog.id} blog={blog} />
+                        <Blog key={blog.id} blog={blog} updateBlogOnServer={updateBlogOnServer} deleteBlogOnServer={deleteBlogOnServer} refreshBlogs={refreshBlogs} />
                     ))}
                 </div>
             ) : (
