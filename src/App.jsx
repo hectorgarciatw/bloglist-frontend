@@ -71,11 +71,14 @@ const App = () => {
         }
     };
 
-    const logout = () => {
+    // Manage the logout process
+    const handleLogout = () => {
         window.localStorage.removeItem("loggedUser");
         setUser(null);
+        refreshBlogs();
     };
 
+    // Refresh the list of blogs
     const refreshBlogs = async () => {
         const blogs = await blogService.getAll();
         setBlogs(blogs);
@@ -92,7 +95,7 @@ const App = () => {
                 <div>
                     <div style={loggedStyle}>
                         <p style={{ fontWeight: "bold" }}>{user.name} logged in</p>
-                        <button onClick={logout}>logout</button>
+                        <button onClick={handleLogout}>logout</button>
                     </div>
                     <Togglable buttonLabel="new note">
                         <CreateForm user={user} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg} onBlogCreate={refreshBlogs} />

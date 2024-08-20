@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const Blog = ({ blog, updateBlogOnServer, deleteBlogOnServer, refreshBlogs }) => {
     const [fullView, setFullView] = useState(false);
@@ -87,6 +88,19 @@ const Blog = ({ blog, updateBlogOnServer, deleteBlogOnServer, refreshBlogs }) =>
             {fullView ? <button onClick={toggleView}>hide</button> : <button onClick={toggleView}>view</button>}
         </div>
     );
+};
+
+Blog.propTypes = {
+    blog: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        author: PropTypes.string.isRequired,
+        url: PropTypes.string,
+        likes: PropTypes.number,
+    }).isRequired,
+    updateBlogOnServer: PropTypes.func.isRequired,
+    deleteBlogOnServer: PropTypes.func.isRequired,
+    refreshBlogs: PropTypes.func.isRequired,
 };
 
 export default Blog;
