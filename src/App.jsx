@@ -7,6 +7,7 @@ import loginService from "./services/login";
 import LoginForm from "./components/LoginForm";
 import CreateForm from "./components/CreateForm";
 import Notification from "./components/Notification";
+import Togglable from "./components/Togglable";
 
 const App = () => {
     // List of blogs of the user
@@ -16,6 +17,12 @@ const App = () => {
     // States for notification handling
     const [successMsg, setSuccessMsg] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
+
+    const loggedStyle = {
+        display: "flex",
+        alignItems: "baseLine",
+        gap: "10px",
+    };
 
     useEffect(() => {
         blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -58,11 +65,14 @@ const App = () => {
 
             {user ? (
                 <div>
-                    <div>
+                    <div style={loggedStyle}>
                         <p style={{ fontWeight: "bold" }}>{user.name} logged in</p>
                         <button onClick={logout}>logout</button>
                     </div>
-                    <CreateForm user={user} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg} onBlogCreate={refreshBlogs} />
+                    <Togglable buttonLabel="new note">
+                        <CreateForm user={user} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg} onBlogCreate={refreshBlogs} />
+                    </Togglable>
+                    <br />
                     {blogs.map((blog) => (
                         <Blog key={blog.id} blog={blog} />
                     ))}
