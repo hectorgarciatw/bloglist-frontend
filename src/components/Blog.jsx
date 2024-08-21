@@ -68,24 +68,22 @@ const Blog = ({ blog, updateBlogOnServer, deleteBlogOnServer, refreshBlogs }) =>
     };
 
     return (
-        <div style={blogStyle}>
-            <div className="blogContact">
-                <div>{blog.title}</div>
-                {fullView && (
-                    <div>
-                        <div>{blog.url}</div>
-                        <div style={likeContent}>
-                            <div>likes {likes}</div>
-                            <button onClick={updateBlog}>like</button>
-                        </div>
-
-                        <div>{blog.author}</div>
-                        <br />
-                        <button onClick={deleteBlog}>remove</button>
-                    </div>
-                )}
+        <div className="blog" style={blogStyle}>
+            <div className="blog-header">
+                <div className="blog-title">{blog.title}</div>
+                <div className="blog-author">{blog.author}</div>
             </div>
-            {fullView ? <button onClick={toggleView}>hide</button> : <button onClick={toggleView}>view</button>}
+            {fullView && (
+                <div className="blog-details">
+                    <div className="blog-url">{blog.url}</div>
+                    <div className="blog-likes">likes {likes}</div>
+                    <button className="likeButton" onClick={updateBlog}>
+                        like
+                    </button>
+                    <button onClick={deleteBlog}>remove</button>
+                </div>
+            )}
+            <button onClick={toggleView}>{fullView ? "hide" : "view"}</button>
         </div>
     );
 };
