@@ -97,7 +97,7 @@ const App = () => {
                         <p style={{ fontWeight: "bold" }}>{user.name} logged in</p>
                         <button onClick={handleLogout}>logout</button>
                     </div>
-                    <Togglable buttonLabel="new note">
+                    <Togglable buttonLabel="new blog">
                         <CreateForm user={user} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg} onBlogCreate={refreshBlogs} />
                     </Togglable>
                     <br />

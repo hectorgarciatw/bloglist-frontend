@@ -52,7 +52,9 @@ const CreateForm = ({ user, setSuccessMsg, setErrorMsg, onBlogCreate }) => {
                     likes
                     <input type="number" value={likes} name="likes" onChange={({ target }) => setLikes(target.value)} />
                 </div>
-                <button type="submit">create</button>
+                <button type="submit" name="create">
+                    create
+                </button>
                 <br />
                 <br />
                 {errorMessage && <p>{errorMessage}</p>}
