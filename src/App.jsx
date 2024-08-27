@@ -108,7 +108,14 @@ const App = () => {
                     </Togglable>
                     <br />
                     {blogs.map((blog) => (
-                        <Blog key={blog.id} blog={blog} updateBlogOnServer={updateBlogOnServer} deleteBlogOnServer={deleteBlogOnServer} refreshBlogs={refreshBlogs} />
+                        <Blog
+                            key={blog.id}
+                            blog={blog}
+                            updateBlogOnServer={updateBlogOnServer}
+                            deleteBlogOnServer={deleteBlogOnServer}
+                            refreshBlogs={refreshBlogs}
+                            currentUser={user} // Asegúrate de pasar el usuario logueado
+                        />
                     ))}
                 </div>
             ) : (

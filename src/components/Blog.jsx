@@ -1,10 +1,9 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-const Blog = ({ blog, updateBlogOnServer, deleteBlogOnServer, refreshBlogsz }) => {
+const Blog = ({ blog, updateBlogOnServer, deleteBlogOnServer, refreshBlogs, currentUser }) => {
     const [fullView, setFullView] = useState(false);
     const [likes, setLikes] = useState(blog.likes);
-
     // Styles
     const blogStyle = {
         display: "flex",
@@ -80,7 +79,7 @@ const Blog = ({ blog, updateBlogOnServer, deleteBlogOnServer, refreshBlogsz }) =
                     <button className="likeButton" onClick={updateBlog}>
                         like
                     </button>
-                    <button onClick={deleteBlog}>remove</button>
+                    {currentUser && currentUser.username === blog.user.username && <button onClick={deleteBlog}>remove</button>}
                 </div>
             )}
             <button onClick={toggleView}>{fullView ? "hide" : "view"}</button>
