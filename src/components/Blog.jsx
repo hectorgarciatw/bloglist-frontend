@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-const Blog = ({ blog, updateBlogOnServer, deleteBlogOnServer, refreshBlogs }) => {
+const Blog = ({ blog, updateBlogOnServer, deleteBlogOnServer, refreshBlogsz }) => {
     const [fullView, setFullView] = useState(false);
     const [likes, setLikes] = useState(blog.likes);
 

@@ -28,7 +28,11 @@ const App = () => {
     };
 
     useEffect(() => {
-        blogService.getAll().then((blogs) => setBlogs(blogs));
+        blogService.getAll().then((blogs) => {
+            // Descending order by likes
+            const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes);
+            setBlogs(sortedBlogs);
+        });
     }, []);
 
     useEffect(() => {
@@ -81,7 +85,9 @@ const App = () => {
     // Refresh the list of blogs
     const refreshBlogs = async () => {
         const blogs = await blogService.getAll();
-        setBlogs(blogs);
+        // Descending order by likes
+        const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes);
+        setBlogs(sortedBlogs);
     };
 
     return (
